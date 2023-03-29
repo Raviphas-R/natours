@@ -16,12 +16,11 @@ const tourRouter = require('./routes/tourRoute');
 const userRouter = require('./routes/userRoute');
 const reviewRouter = require('./routes/reviewRoute');
 const bookingRouter = require('./routes/bookingRoute');
-const bookingController = require('./controllers/bookingController');
 const viewRouter = require('./routes/viewRoute');
 
 const app = express();
 
-// app.enable('trust proxy');
+app.enable('trust proxy');
 
 app.set('view engine', 'pug');
 app.set('views', path.join(__dirname, 'views'));
@@ -86,12 +85,6 @@ const limiter = rateLimit({
   message: 'Too many requests from this IP, please try again in an hour',
 });
 app.use('/api', limiter);
-
-app.post(
-  '/webhook-checkout',
-  express.raw({ type: 'application/json' }),
-  bookingController.webhookCheckout
-);
 
 // Body parser, rending data from body into req.body
 app.use(express.json({ linit: '10kb' })); // Limit body size 10kb, if larger than, it will not accept
