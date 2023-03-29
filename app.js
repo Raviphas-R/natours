@@ -28,9 +28,9 @@ app.set('views', path.join(__dirname, 'views'));
 
 // 1) GLOBAL MIDDLEWARES
 // Implement CORS
-app.use(cors());
+// app.use(cors());
 
-app.options('*', cors());
+// app.options('*', cors());
 
 // Serving static files .express.static() --> use to define that all static assets(file doesn't change).
 // then, it will automatically to served from the folder that define.
