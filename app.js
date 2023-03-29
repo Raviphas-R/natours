@@ -8,7 +8,7 @@ const xss = require('xss-clean');
 const hpp = require('hpp');
 const cookieParser = require('cookie-parser');
 const compression = require('compression');
-// const cors = require('cors');
+const cors = require('cors');
 
 const AppError = require('./utils/appError');
 const globalErrorHandler = require('./controllers/errorController');
@@ -16,21 +16,20 @@ const tourRouter = require('./routes/tourRoute');
 const userRouter = require('./routes/userRoute');
 const reviewRouter = require('./routes/reviewRoute');
 const bookingRouter = require('./routes/bookingRoute');
-const bookingController = require('./controllers/bookingController');
 const viewRouter = require('./routes/viewRoute');
 
 const app = express();
 
-// app.enable('trust proxy');
+app.enable('trust proxy');
 
 app.set('view engine', 'pug');
 app.set('views', path.join(__dirname, 'views'));
 
 // 1) GLOBAL MIDDLEWARES
 // Implement CORS
-// app.use(cors());
+app.use(cors());
 
-// app.options('*', cors());
+app.options('*', cors());
 
 // Serving static files .express.static() --> use to define that all static assets(file doesn't change).
 // then, it will automatically to served from the folder that define.
@@ -86,12 +85,6 @@ const limiter = rateLimit({
   message: 'Too many requests from this IP, please try again in an hour',
 });
 app.use('/api', limiter);
-
-app.post(
-  '/webhook-checkout',
-  express.raw({ type: 'application/json' }),
-  bookingController.webhookCheckout
-);
 
 // Body parser, rending data from body into req.body
 app.use(express.json({ linit: '10kb' })); // Limit body size 10kb, if larger than, it will not accept
