@@ -14,6 +14,11 @@ exports.getCheckoutSession = catchAsync(async (req, res, next) => {
     process.env.STRIPE_SECRET_KEY
   ).checkout.sessions.create({
     payment_method_types: ['card'],
+    // success_url: `${req.protocol}://${req.get('host')}/?tour=${
+    //   req.params.tourId
+    // }&user=${req.user.id}&price=${tour.price}`,
+    success_url: `${req.protocol}://${req.get('host')}/my-tours`,
+    cancel_url: `${req.protocol}://${req.get('host')}/tours/${tour.slug}`,
     customer_email: req.user.email,
     client_reference_id: req.params.tourId,
     line_items: [
@@ -31,11 +36,6 @@ exports.getCheckoutSession = catchAsync(async (req, res, next) => {
       },
     ],
     mode: 'payment',
-    // success_url: `${req.protocol}://${req.get('host')}/?tour=${
-    //   req.params.tourId
-    // }&user=${req.user.id}&price=${tour.price}`,
-    success_url: `${req.protocol}://${req.get('host')}/my-tours`,
-    cancel_url: `${req.protocol}://${req.get('host')}/tours/${tour.slug}`,
   });
 
   //3 Send to client
