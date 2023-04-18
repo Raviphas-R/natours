@@ -14,13 +14,13 @@ const reviewSchema = new mongoose.Schema(
     createdAt: { type: Date, default: Date.now() },
     tour: {
       // This use for refer to _id of Tour. to populate it to this(ReviewSchema)
-      type: mongoose.Schema.ObjectId,
+      type: mongoose.Schema.Types.ObjectId,
       ref: 'Tour',
       ////////////////////////////////////
       required: [true, 'Review must belong to a tour'],
     },
     user: {
-      type: mongoose.Schema.ObjectId,
+      type: mongoose.Schema.Types.ObjectId,
       ref: 'User',
       required: [true, 'Review must belong to a user'],
     },
