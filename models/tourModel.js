@@ -109,7 +109,7 @@ const tourSchema = new mongoose.Schema(
     // This is for EMBEDDING DATA TYPE
     // guides: Array
     // This for REFERRENCE DATA TYPE, to get the data. use .populate() in controller
-    guides: [{ type: mongoose.Schema.ObjectId, ref: 'User' }],
+    guides: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
   },
   {
     toJSON: { virtuals: true },
